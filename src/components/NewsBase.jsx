@@ -230,7 +230,7 @@ export default class NewsBase extends Component {
             // articles : this.articles,   -- we comment out to use API
             articles : [],
             loading  : false,
-            page : 1
+            page : 1,
         }
       }
 
@@ -294,10 +294,10 @@ export default class NewsBase extends Component {
             
         </div>
 
-        <div class="d-flex justify-content-between">
-        <button type="button" disabled={this.state.page<=1} class="btn btn-dark" onClick={this.handlePrev}>Previous Page</button>
+        <div className="d-flex justify-content-between">
+        <button type="button" disabled={this.state.page<=1} className="btn btn-dark" onClick={this.handlePrev}>Previous Page</button>
 
-        <button type="button" class="btn btn-dark" disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / 20)} onClick={this.handleNext}>Next Page</button>
+        <button type="button" className="btn btn-dark" disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / 20)} onClick={this.handleNext}>Next Page</button>
         </div>
       </div>
     )
