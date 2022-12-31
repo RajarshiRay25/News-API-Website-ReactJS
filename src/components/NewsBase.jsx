@@ -221,8 +221,8 @@ export default class NewsBase extends Component {
     //       "content": null
     //     }
     //   ]
-      constructor(){
-        super();
+      constructor(props){
+        super(props);
         console.log("RUNNING COMPONENT.")
 
         // setting state
@@ -232,13 +232,13 @@ export default class NewsBase extends Component {
             loading  : false,
             page : 1,
         }
+        document.title = `${this.props.category}`
       }
-
       // to work with live data -- use direct API key
 
-      async componentDidMount(){
+      async updateNews(){
         console.log("FETCHING .....")
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d2095ada67fb4b3fad68105f704b1b8f&pagesize=${this.props.pageSize}`
+        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d2095ada67fb4b3fad68105f704b1b8f&page=${this.state.page}&pagesize=${this.props.pageSize}`
         this.setState({loading:true})
         let dataFetched = await fetch(url)
         let parsedData = await dataFetched.json()
@@ -248,39 +248,23 @@ export default class NewsBase extends Component {
         loading: false})
       }
 
+      async componentDidMount(){
+        this.updateNews()
+      }
+
       handleNext = async ()=>{
-        if (this.state.page + 1 > Math.ceil(this.state.totalResults / 20)) {   // this checks if page number is greater than actual page number or not-if bigger then it stops
-        }
-        else{
-          let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d2095ada67fb4b3fad68105f704b1b8f&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
-          this.setState({loading: true})
-          let dataFetched = await fetch(url)
-          let parsedData = await dataFetched.json()
-          console.log(parsedData)
-          this.setState({
-            page: this.state.page + 1,
-            articles: parsedData.articles,
-            loading: false
-          })
-        }
+        this.setState({page:this.state.page+1})
+        this.updateNews()
       }
 
       handlePrev = async ()=>{
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d2095ada67fb4b3fad68105f704b1b8f&page=${this.state.page-1}&pageSize=${this.props.pageSize}`
-        this.setState({loading: true})
-        let dataFetched = await fetch(url)
-        let parsedData = await dataFetched.json()
-        console.log(parsedData)
-        this.setState({
-          page: this.state.page - 1,
-          articles: parsedData.articles,
-          loading: false
-        })
+        this.setState({page:this.state.page-1})
+        this.updateNews()
       }
   render() {
     return (
       <div className="container my-3">
-        <h1 className='text-center'>NEWS AREA</h1>
+        <h1 className='text-center'>NEWS AREA On {this.props.category} Category</h1>
         {this.state.loading && <Spinner/>}
         {/* Maps all values */}
 

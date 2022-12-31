@@ -12,7 +12,7 @@ export default class NewsItems extends Component {
                 <p class="badge text-bg-info">Time: {new Date(time).toGMTString()}</p>
                 <h5 className="card-title">{title}...</h5>
                 <p className="card-text">{description}...</p>
-                <p class="card-text"><small class="text-muted">By: {author?author:"Anonymous"} </small></p>
+                <p className="card-text"><small class="text-muted">By: {author?author:"Anonymous"} </small></p>
                 <a href={newsURL} target = "_blank" rel="noreferrer" className="btn btn-sm btn-primary">Read News</a>
             </div>
             </div>
